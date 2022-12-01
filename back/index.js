@@ -3,8 +3,11 @@ const app = express()
 const http = require('http')
 const server = http.createServer(app)
 const io = require('socket.io')(server)
+const cors = require('cors')
 const ioRooms = io.of('/')
 const PORT = 3000
+
+app.use(cors())
 
 app.get('/', (req, res) => {
     res.send('Hello World!')

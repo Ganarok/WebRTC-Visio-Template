@@ -1,15 +1,16 @@
 import { withRouter } from "next/router"
 import { PureComponent } from "react"
+import { io } from "socket.io-client"
 
 import Loader from "@/components/Loader"
 import VisioVideo from "@/components/VisioVideo"
 
+const socket = io('http://localhost:3000')
 const ROOM_STATUS = {
     JOINING: 0,
-    JOINED: 1,
-    WAITING: 2,
-    IN_CALL: 3,
-    LEAVED: 4
+    WAITING: 1,
+    IN_CALL: 2,
+    LEAVED: 3
 }
 
 // STUN servers if communicating though WIFI, TURN servers if someone is communicating though LTE Network (4G)
@@ -47,12 +48,14 @@ export default withRouter(class Room extends PureComponent {
     async componentDidMount() {
         const { selfAudio, selfVideo } = this.state
 
-        // this.initSocketIo()
+        this.initSocketIo()
 
         const isLocalStreamDefined = await this.setLocalStream({ audio: selfAudio, video: selfVideo })
 
         if (!isLocalStreamDefined)
-            console.log('HangUp')
+            this.setState({
+                callStatus: ROOM_STATUS.LEAVED
+            })
         else
             this.joinRoom()
 
@@ -62,13 +65,21 @@ export default withRouter(class Room extends PureComponent {
 
     }
 
+    initSocketIo() {
+        socket.on('room_joined', () => {
+            this.setState({
+                callStatus: ROOM_STATUS.WAITING
+            })
+        })
+    }
+
     async joinRoom() {
         const { name, id } = this.props.router.query
 
         if (!id)
             return
 
-        // socket.emit('join')
+        // socket.emit('join', { name, id })
         
         this.setState({
             localName: name,

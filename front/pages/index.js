@@ -1,15 +1,22 @@
 import { useRouter } from "next/router"
 import { useState } from "react"
 
-export default Home = () => {
+const Home = () => {
     const [ id, setId ] = useState('')
     const [ name, setName ] = useState('')
     const router = useRouter()
 
     const handleValues = () => {
         if (!id)
-            return
+            router.push(`/${(Math.random() + 1).toString(36).substring(10)}${name && '?name='+name}`)
+        else
+            router.push(`/${id}${name && '?name='+name}`)
+        }
 
+    const handleJoin = () => {
+        if (!id)
+            return
+        
         router.push(`/${id}${name && '?name='+name}`)
     }
 
@@ -46,6 +53,13 @@ export default Home = () => {
                     onChange={(v) => setId(v.target.value)}
                     className="input"
                 />
+
+                <button
+                    className="btn shadow-solid"
+                    onClick={handleJoin.bind(this)}
+                >
+                    JOIN
+                </button>
             </div>
 
             <div className="bg-white w-1/2 max-w-sm rounded-sm h-0.5" />
@@ -65,3 +79,5 @@ export default Home = () => {
         </div>
     )
 }
+
+export default Home
