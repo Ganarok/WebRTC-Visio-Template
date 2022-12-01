@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    .btn {
+        @apply bg-rtc-turquoise text-rtc-black font-bold px-4 py-2 rounded-full select-none hover:opacity-90 active:scale-95
+    }
+
+    .input {
+        @apply px-4 py-1 rounded-md text-rtc-black focus:outline-rtc-turquoise
+    }
+
+    .shadow-solid {
+        box-shadow: 2px 2px #272839;
+    }
+}
+
+html {
+    color: white;
+    min-height: 100vh;
+    background: #272839;
+    background: -moz-linear-gradient(180deg, rgba(27,27,27,1) 0%, rgba(21,33,40,1) 100%);
+    background: -webkit-linear-gradient(180deg, rgba(27,27,27,1) 0%, rgba(21,33,40,1) 100%);
+    background: linear-gradient(180deg, rgba(27,27,27,1) 0%, rgba(21,33,40,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1b1b1b",endColorstr="#152128",GradientType=1);
+    font-family: 'Courier New', Courier, monospace;
+}
