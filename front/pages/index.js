@@ -8,7 +8,7 @@ const Home = () => {
 
     const handleValues = () => {
         if (!id)
-            router.push(`/${(Math.random() + 1).toString(36).substring(10)}${name && '?name='+name}`)
+            router.push(`/${(Date.now()).toString()}${name && '?name='+name}`)
         else
             router.push(`/${id}${name && '?name='+name}`)
         }
@@ -23,57 +23,56 @@ const Home = () => {
     return (
         <div className="flex flex-col items-center justify-evenly font-bold text-center h-screen">
             <h1 className="text-3xl sm:text-4xl">
-                Visio conférence WebRTC
+                WebRTC Conference
             </h1>
 
             <div className="space-y-6">
-
                 <h3>
-                    Définissez votre nom
+                    Define your name
                 </h3>
 
                 <input 
-                    placeholder="Entrez votre nom ici"
+                    placeholder="Enter your name here"
                     value={name}
                     onChange={(v) => setName(v.target.value)}
                     className="input"
                 />
             </div>
 
-
-            <div className="space-y-6">
-
+            <div className="flex flex-col space-y-4">
                 <h3>
-                    Rejoignez une room spécifique
+                    Join a specific room
                 </h3>
 
                 <input 
-                    placeholder="ID de la room"
+                    placeholder="Room ID to join"
                     value={id}
                     onChange={(v) => setId(v.target.value)}
                     className="input"
                 />
 
-                <button
-                    className="btn shadow-solid"
-                    onClick={handleJoin.bind(this)}
-                >
-                    JOIN
-                </button>
+                <div className="relative">
+                    <button
+                        className="btn shadow-solid"
+                        onClick={handleJoin.bind(this)}
+                    >
+                        JOIN
+                    </button>
+                </div>
             </div>
 
             <div className="bg-white w-1/2 max-w-sm rounded-sm h-0.5" />
 
             <div className="space-y-4">
                 <h3>
-                    ... ou générez-en une !
+                    ... or create a new one !
                 </h3>
 
                 <button
                     className="btn shadow-solid"
                     onClick={handleValues.bind(this)}
                 >
-                    GENERER
+                    GENERATE
                 </button>
             </div>
         </div>
